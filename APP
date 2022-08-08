@@ -1,0 +1,24 @@
+TEMP SENSOR ON LCD APP
+#include"../LIB/STD_TYPES.h"
+#include"../MCAL/DIO/DIO_int.h"
+#include"../MCAL/ADC/Int.h"
+#include"../HAL/LCD/LCD_int.h"
+#include<util/delay.h>
+U16 L_READVALUE=0;
+U16  L_READ_ANALOG=0;
+U16  L_TEMP=0;
+int main(void){
+	HLCD_voidInit();
+	M_ADC_vINIt();
+	while(1){
+		HLCD_voidCLR();
+		HLCD_voidDisplayString("TEMP=");
+		L_READVALUE=M_ADC_u16ReadDigital(Channel_ID0);
+		 L_READ_ANALOG=((U32)L_READVALUE*5000UL)/1023UL;
+		 L_TEMP=L_READ_ANALOG/10;
+		 HLCD_voidSendInt((U32)L_TEMP);
+
+	}
+
+return 0;
+}
